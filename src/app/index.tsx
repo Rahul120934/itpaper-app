@@ -101,39 +101,7 @@ export default function HomeScreen() {
               Browse & read computer science papers
             </ThemedText>
           </View>
-          
-          {/* Connection Status Badge */}
-          <Link href="/profile" asChild>
-            <Pressable style={styles.statusBadgeWrapper}>
-              <View
-                style={[
-                  styles.statusBadge,
-                  {
-                    backgroundColor: isSupabaseConfigured
-                      ? 'rgba(16, 185, 129, 0.15)'
-                      : 'rgba(245, 158, 11, 0.15)',
-                    borderColor: isSupabaseConfigured
-                      ? 'rgba(16, 185, 129, 0.3)'
-                      : 'rgba(245, 158, 11, 0.3)',
-                  },
-                ]}
-              >
-                <Database
-                  size={12}
-                  color={isSupabaseConfigured ? '#10B981' : '#F59E0B'}
-                />
-                <ThemedText
-                  type="smallBold"
-                  style={[
-                    styles.statusText,
-                    { color: isSupabaseConfigured ? '#10B981' : '#F59E0B' },
-                  ]}
-                >
-                  {isSupabaseConfigured ? 'Supabase' : 'Demo Mode'}
-                </ThemedText>
-              </View>
-            </Pressable>
-          </Link>
+
         </View>
 
         {/* Horizontal Category Selector */}
