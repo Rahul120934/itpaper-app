@@ -77,15 +77,7 @@ export default function AppTabs() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({ color, focused }) => (
-            <User color={color} size={20} strokeWidth={focused ? 2.5 : 2} />
-          ),
-        }}
-      />
+
       
       {/* Hide the details screen from the tab bar */}
       <Tabs.Screen
