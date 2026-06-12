@@ -1,7 +1,7 @@
 import 'react-native-url-polyfill/auto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
-import { MOCK_PAPERS, Paper, getLocalBookmarks, toggleLocalBookmark } from './mockData';
+import { Paper, getLocalBookmarks, toggleLocalBookmark } from './mockData';
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || '';
@@ -112,7 +112,7 @@ export function mapDocumentToPaper(doc: any): Paper {
 // Unified Data Access API
 export async function getPapers(searchQuery = '', category = 'All'): Promise<Paper[]> {
   if (!isSupabaseConfigured || !supabase) {
-    return filterPapers(MOCK_PAPERS, searchQuery, category);
+    return [];
   }
 
   try {
@@ -127,7 +127,7 @@ export async function getPapers(searchQuery = '', category = 'All'): Promise<Pap
     return filterPapers(mapped, searchQuery, category);
   } catch (error) {
     console.warn('[getPapers] Supabase fetch failed:', sanitizeError(error));
-    return filterPapers(MOCK_PAPERS, searchQuery, category);
+    return [];
   }
 }
 
@@ -152,11 +152,11 @@ export async function getPaperById(id: string): Promise<Paper | null> {
   // Validate ID format before querying
   if (!id || !isValidUUID(id)) {
     console.warn('[getPaperById] Invalid paper ID format.');
-    return MOCK_PAPERS.find(p => p.id === id) || null;
+    return null;
   }
 
   if (!isSupabaseConfigured || !supabase) {
-    return MOCK_PAPERS.find(p => p.id === id) || null;
+    return null;
   }
 
   try {
@@ -165,7 +165,7 @@ export async function getPaperById(id: string): Promise<Paper | null> {
     return data ? mapDocumentToPaper(data) : null;
   } catch (error) {
     console.warn('[getPaperById] Supabase fetch failed:', sanitizeError(error));
-    return MOCK_PAPERS.find(p => p.id === id) || null;
+    return null;
   }
 }
 
@@ -175,7 +175,7 @@ export async function getBookmarks(): Promise<Paper[]> {
   if (bookmarkedIds.length === 0) return [];
 
   if (!isSupabaseConfigured || !supabase) {
-    return MOCK_PAPERS.filter(p => bookmarkedIds.includes(p.id));
+    return [];
   }
 
   try {
@@ -184,7 +184,7 @@ export async function getBookmarks(): Promise<Paper[]> {
     return (data || []).map(mapDocumentToPaper);
   } catch (error) {
     console.warn('[getBookmarks] Supabase fetch failed:', sanitizeError(error));
-    return MOCK_PAPERS.filter(p => bookmarkedIds.includes(p.id));
+    return [];
   }
 }
 
